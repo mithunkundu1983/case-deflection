@@ -1,66 +1,86 @@
 function CreateHeading(len) {
     var para = document.createElement("P");
+    para.classList.add("countToolbar", "border-bottom", "countText");
     var t;
-    if(len==1)
-        t = document.createTextNode("Search term found in \""+len+"\" video");
+    if (len ==0)
+        t = document.createTextNode("No video found");
+    else if(len==1)
+        t = document.createTextNode(len+" Video found");
     else
-        t = document.createTextNode("Search term found in \""+len+"\" videos");
-    // para.setAttribute("style","color:#eff913");
+        t = document.createTextNode(len+" Videos found");
     para.appendChild(t);
     document.getElementById("heading").appendChild(para);
 }
 
 function Create(name,url,i,resultData,text1) {
-    var v_name = document.createElement("P");
-    var ifrm = document.createElement("video");
-    ifrm.id="iframe"+i;
-    ifrm.controls="true";
-    ifrm.setAttribute("src",url);
-    ifrm.setAttribute("style","height:280px; width:500px; padding-bottom:10px;}")
-    var t = document.createTextNode(name+"\n");
-    v_name.appendChild(t);
-    v_name.setAttribute("style","font-weight: bold; font-size: 130%");
-    document.getElementById("vd").appendChild(v_name);
-    document.getElementById("vd").appendChild(ifrm);
+    var row_master_div = document.createElement("tr");
+    row_master_div.classList.add("videoSearch");
 
+    var vid_master_div = document.createElement("div");
+    vid_master_div.classList.add("videoDiv");
 
-    var leftDiv = document.createElement("div");                   //Create left div
-    leftDiv.id = "left";                                           //Assign div id
-    a = document.createElement('a');
-    a.href = url;
-    a.innerHTML = "Get Video";                //<a>INNER_TEXT</a>
-    leftDiv.appendChild(a);  // Append the link to the div
-    document.body.appendChild(leftDiv);
-    document.getElementById("vd").appendChild(leftDiv);
+    var details_master_div = document.createElement("div");
+    details_master_div.classList.add("videoDetailsDiv");
+
+    var video_name = document.createElement("div");
+    video_name.classList.add("videoname");
+    var video_text = document.createTextNode((i+1) + ". " + name+"\n");
+    video_name.appendChild(video_text);
+
+    vid_master_div.appendChild(video_name);
+
+    var video_frame = document.createElement("video");
+    video_frame.id="videoFrame"+i;
+    video_frame.controls="true";
+    video_frame.setAttribute("src",url);
+    vid_master_div.appendChild(video_frame);
+
+    var btnHolderDiv = document.createElement("div");
+    btnHolderDiv.id = "HolderDiv";
+    var dnld_anchor = document.createElement('a');
+    dnld_anchor.href = url;
+    var dnld_btn = document.createElement('button');
+    dnld_btn.classList.add("btn","green");
+    var element_i = document.createElement('i');
+    element_i.classList.add("fa","fa-download");
+    dnld_btn.appendChild(element_i);
+    var dnld_text = document.createTextNode("Download");
+    dnld_btn.appendChild(dnld_text);
+    dnld_anchor.appendChild(dnld_btn);
+    btnHolderDiv.appendChild(dnld_anchor);
+
+    vid_master_div.appendChild(btnHolderDiv);
+    row_master_div.appendChild(vid_master_div);
 
     if (null != resultData.hits.hits[i].inner_hits) {
         var len1=resultData.hits.hits[i].inner_hits.subtitle.hits.hits.length;
-        leftDiv.setAttribute("style","padding-bottom:10px;");
-        var t2 = document.createTextNode(" GO TO TIME :-");
-        document.getElementById("vd").appendChild(t2);
-        document.getElementById("vd").setAttribute("style","font-weight: bold;");
-        var div1= document.createElement("div");
+
+        details_master_div.setAttribute("style","font-weight: bold;");
+
+        var timeButtonHolder= document.createElement("div");
+        timeButtonHolder.classList.add("timeButtonHolder","border-bottom");
+
         var sub= document.createElement("p");
+        sub.classList.add("subtitle");
         sub.id="sub"+i;
-        document.getElementById("vd").appendChild(sub);
+        details_master_div.appendChild(sub);
+
         for(var j=0;j<len1;j++)
         {
-            var lines=resultData.hits.hits[i].inner_hits.subtitle.hits.hits[j];
-            var t = document.createElement("button");                         //Create button
-            var sec=lines._source.time;
-            var min=0;
-            if(sec>=60){
-                min=sec/60;
-                sec=sec%60;
-            }
-            if(sec<=9)
-                sec='0'+sec;
-            var time=Math.floor(min)+":"+ parseInt(sec, 10);
-            var t1 = document.createTextNode(time);       // Create a text node
-            t.setAttribute('data',time+" - "+lines._source.word);
-            t.id = i+"####"+lines._source.time;
-            t.appendChild(t1);
-            t.addEventListener('click', function() {
+            var hits = resultData.hits.hits[i].inner_hits.subtitle.hits.hits;
+            hits = hits.sort(compare);
+
+            var lines = hits[j];
+
+            var timeButton = document.createElement("button");
+            timeButton.classList.add("timeButton","btn","green");
+
+            var timeString = getTimeString(lines._source.time);
+            var t1 = document.createTextNode(timeString);       // Create a text node
+            timeButton.setAttribute('data',timeString+" - "+lines._source.word);
+            timeButton.id = i+"####"+lines._source.time;
+            timeButton.appendChild(t1);
+            timeButton.addEventListener('click', function() {
                 var v=this.id;
                 var l=v.length;
                 var frame_number="";
@@ -77,7 +97,7 @@ function Create(name,url,i,resultData,text1) {
                     if(ch!='#' && f==1)
                         time+=ch;
                 }
-                document.getElementById("iframe"+frame_number).currentTime = time;
+                video_frame.currentTime = time;
 
                 var data1=this.getAttribute('data');
                 var text2=text1;
@@ -89,55 +109,33 @@ function Create(name,url,i,resultData,text1) {
                 data1=data1.replace(re,text2);
                 data1=data1.replace(time1,time2);
                 var text = document.createElement("p");
+                text.classList.add("subtitletext");
                 text.innerHTML = data1;
-                document.getElementById("iframe"+frame_number).play();
+                document.getElementById("videoFrame"+frame_number).play();
                 var t2 = document.createTextNode(text);
                 document.getElementById("sub"+frame_number).innerHTML= "";
                 document.getElementById("sub"+frame_number).appendChild(text);
             }, false);
-            t.setAttribute("style","margin-right:20px; background: #ddd;  width:40px; height:30px; margin-bottom:20px;");
 
-            div1.appendChild(t);
-            document.getElementById("vd").appendChild(div1);
-            var div2=document.createElement("div");
+            timeButtonHolder.appendChild(timeButton);
+            details_master_div.appendChild(timeButtonHolder);
+            row_master_div.appendChild(details_master_div);
+
+            document.getElementById("vd").appendChild(row_master_div);
 
             document.getElementById("sub"+i).setAttribute("style", "color:#747474; font-size: 120%;");
         }
+    } else {
+        document.getElementById("vd").appendChild(row_master_div);
     }
 }
 
 function dispResult(a,b,resultData,text) {
-    var c;
-    if(a>=b){
-        document.getElementById("more").innerHTML = "";
-        return;
-    }
-    if(b-a<=2)
-    {
-        for(var i=a;i<b;i++){
-            var name=resultData.hits.hits[i]._source.name;
-            var url=resultData.hits.hits[i]._source.url;
-            Create(name,url,i,resultData,text);
-        }
-        document.getElementById("more").innerHTML = "";
-        // dispResult(a,b,resultData);
-    }
-    if(b-a>2){
-        document.getElementById("more").innerHTML = "";
-        for(var i=a;i<a+2;i++){
-            var name=resultData.hits.hits[i]._source.name;
-            var url=resultData.hits.hits[i]._source.url;
-            Create(name,url,i,resultData,text);
-        }
-        a=a+2;
-        var btn = document.createElement("BUTTON");        // Create a <button> element
-        var t = document.createTextNode("Load More");      // Create a text node
-        btn.appendChild(t);                                // Append the text to <button>
-        btn.setAttribute("style"," width:600px;height:50px;background:#ddd;margin-bottom:20px;");
-        document.getElementById("more").appendChild(btn);
-        btn.addEventListener('click', function() {
-            dispResult(a,b,resultData,text);
-        }, false);
+
+    for(var i=a;i<b;i++){
+        var name=resultData.hits.hits[i]._source.name;
+        var url=resultData.hits.hits[i]._source.url;
+        Create(name,url,i,resultData,text);
     }
 }
 
@@ -159,13 +157,12 @@ function search() {
                     }
                 },
                 "inner_hits": {
-                    "size": 15,
+                    "size": 99,
                     "highlight": {
                         "fields": {
                             "subtitle.time": {}
                         }
-                    },
-                    "sort": {"subtitle.time" :{"order" :"asc"}}
+                    }
                 }
             }
         }

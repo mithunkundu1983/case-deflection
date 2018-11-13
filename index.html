@@ -6,35 +6,50 @@
       integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
       crossorigin="anonymous">
     </script>
-    <title>Media InGen - Search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="css/style.css" rel="stylesheet">
     <script src="js/index.js"></script>
+    <script src="js/utility.js"></script>
+    <link rel='icon' type='image/x-icon' href='images/favicons/favicon.ico' />
+
+    <link rel="icon" type="image/png" href="images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="images/favicons/favicon-32x32.png" sizes="32x32">
+
+    <title>Hyland Enterprise Search</title>
 </head>
 <body>
 <div class="headerDiv">
     <div class="row">
         <div class="columnLeft">
-            <div>
+            <div class="logo">
                 <img src="images/hyland.png"  style="text-align: left;">
             </div>
         </div>
-        <div class="columnRight">
+        <div class="columnMiddle">
             <div>
                 <img src="images/es.png"  style="text-align: right;">
             </div>
         </div>
         <div class="form-wrapper cf">
             <input id="search" type="text" placeholder="Search here..." name="search" oninput="search()" required>
-            <button type="submit" onclick="search()">Search</button>
+        </div>
+        <div class="columnRight">
+            <img src="images/rightMenu.png"  style="text-align: right;">
         </div>
     </div>
 </div>
 
 <div class="area">
-<div id="search1" style=" padding-bottom: 20px; ">
-    <h2><i><div id="heading" class="Head" style="color: #0c174f; font-size: 130%; text-decoration: underline;"></div></i></h2>
-   <div style="display: flex;">
-      <div id="vd" class="video" style="padding-right:50px;font-weight: bold; text-decoration: underline;"> </div>
+
+
+<div id="resultContainer">
+    <div id="heading" class="Head" style="color: black; text-decoration: none;"></div>
+   <div>
+      <div class="video">
+          <table class="resultTable">
+            <tbody id="vd"></tbody>
+          </table>
+      </div>
       <div id="name_url" style="padding-left:50px; font-weight: bold;" class="detail"></div>
     </div>
      <div id="more" class="details"></div>
