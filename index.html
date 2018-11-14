@@ -6,10 +6,11 @@
       integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
       crossorigin="anonymous">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="css/style.css" rel="stylesheet">
-    <script src="js/index.js"></script>
-    <script src="js/utility.js"></script>
+    <link href="CSS/style_deflection.css" rel="stylesheet">
+    <script src="js/deflect.js"></script>
     <link rel='icon' type='image/x-icon' href='images/favicons/favicon.ico' />
 
     <link rel="icon" type="image/png" href="images/favicons/favicon-16x16.png" sizes="16x16">
@@ -18,6 +19,27 @@
     <title>Hyland Enterprise Search</title>
 </head>
 <body>
+
+<script id="mp_template" type="text/template">
+    <div class="singleSuggestion" onclick="midDivClicked('{{{id}}}')">
+        <div class="issueDiv">{{{issue}}}</div>
+        <div class="resolutionDiv">{{{resolution}}}</div>
+    </div>
+</script>
+
+<script id="rp_template" type="text/template">
+    <div class="suggestionnDetails">
+        <div class="issueDivDetails">{{{issue}}}</div>
+        <div class="resolutionDivDetails">{{{resolution}}}</div>
+        <div class="rightDivFooter" id="rightDivFooter">
+            <div class="titleWrap line-separator">
+                <label><input type="submit" value="Submit Issue" /></label>
+                <label><input type="submit" value="Issue Resolved" /></label>
+            </div>
+        </div>
+    </div>
+</script>
+
 <div class="headerDiv">
     <div class="row">
         <div class="columnLeft">
@@ -31,7 +53,7 @@
             </div>
         </div>
         <div class="form-wrapper cf">
-            <input id="search" type="text" placeholder="Search here..." name="search" oninput="search()" required>
+            <!--<input id="search" type="text" placeholder="Search here..." name="search" oninput="search()" required>-->
         </div>
         <div class="columnRight">
             <img src="images/rightMenu.png"  style="text-align: right;">
@@ -44,7 +66,7 @@
 
 <div id="resultContainer">
     <div id="heading" class="Head" style="color: black; text-decoration: none;"></div>
-   <div>
+    <div>
       <div class="video">
           <table class="resultTable">
             <tbody id="vd"></tbody>
@@ -52,8 +74,37 @@
       </div>
       <div id="name_url" style="padding-left:50px; font-weight: bold;" class="detail"></div>
     </div>
-     <div id="more" class="details"></div>
+    <div id="more" class="details"></div>
+
+
+    <div class="rowSuggestions">
+        <div class="divLeft">
+            <div class="form-style-2">
+                <label for="field1"><span>Name <span class="required">*</span></span><input type="text" class="input-field" name="field1" value="" /></label>
+                <label for="field4"><span>Issue Type</span>
+                    <select name="field4" class="select-field">
+                        <option value="General Question">General</option>
+                        <option value="Advertise">Advertisement</option>
+                        <option value="Partnership">Partnership</option>
+                    </select>
+                </label>
+                <label for="field5"><span>Issue <span class="required">*</span></span>
+                <textarea name="field5" class="textarea-field" oninput="startSuggesting()" id="issue"></textarea>
+                </label>
+
+                <label><span> </span><input type="submit" value="Submit" /></label>
+            </div>
+        </div>
+        <div class="divMiddle">
+            <div id="suggestionDiv">
+            </div>
+        </div>
+        <div class="divRight" id="divRight">
+        </div>
+    </div>
 </div>    
-</div>    
+</div>
+</div>
+</div>
 </body>
 </html>
