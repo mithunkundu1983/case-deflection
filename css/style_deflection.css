@@ -301,6 +301,25 @@ select{
     padding-right: 10px;
 }
 
+.divMiddle input[type=submit],
+.divMiddle input[type=button]{
+    border: none;
+    padding: 8px 15px 8px 15px;
+    background: #FF8500;
+    color: #fff;
+    box-shadow: 1px 1px 4px #DADADA;
+    -moz-box-shadow: 1px 1px 4px #DADADA;
+    -webkit-box-shadow: 1px 1px 4px #DADADA;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+.divMiddle input[type=submit]:hover,
+.divMiddle input[type=button]:hover{
+    background: #EA7B00;
+    color: #fff;
+}
+
 .midHeader{
     text-align:center
 }
@@ -326,6 +345,8 @@ select{
     border: 2px solid #C5CAE9;
     padding: 10px;
     margin-top: 20px;
+    padding-bottom: 50px;
+    height: 65vh;
 }
 
 .issueDiv {
@@ -354,15 +375,46 @@ select{
 .resolutionDivDetails{
     color: #212121;
     line-height: 1.4em;
+    padding-bottom: 2em;
+}
+
+.footers{
+    padding-top: 1em;
+    text-align: center;
+    display: inline-block;
+}
+
+.footers input[type=submit],
+.footers input[type=button]{
+    border: none;
+    padding: 8px 15px 8px 15px;
+    background: #FF8500;
+    color: #fff;
+    box-shadow: 1px 1px 4px #DADADA;
+    -moz-box-shadow: 1px 1px 4px #DADADA;
+    -webkit-box-shadow: 1px 1px 4px #DADADA;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+.footers input[type=submit]:hover,
+.footers input[type=button]:hover{
+    background: #EA7B00;
+    color: #fff;
 }
 
 .line-separator{
     height:1px;
-    background:#717171;
-    border-bottom:1px solid #313030;
+    background: #bebebe;
+    /*border-bottom:1px solid #313030;*/
 }
 
 #resultContainer {
     overflow-y: hidden;
     max-height: 80vh;
+}
+
+.resolutionDivDetails{
+    overflow-y: auto;
+    height: 57vh;
 }

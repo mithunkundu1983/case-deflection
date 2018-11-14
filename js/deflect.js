@@ -6,10 +6,43 @@ function startSuggesting() {
     var text = "";
     text = x.value;
     var data = {
-        "query": {
-            "multi_match" : {
-                "query":    text,
-                "fields": [ "issue^2", "resolution" ]
+        "query":{
+            "bool":{
+                "must":[
+                    {
+                        "multi_match":{
+                            "query":text,
+                            "fields":[
+                                "issue^4",
+                                "resolution"
+                            ]
+                        }
+                    }
+                ],
+                "should":[
+                    {
+                        "multi_match":{
+                            "query":text,
+                            "fields":[
+                                "issue^2",
+                                "resolution"
+                            ],
+                            "type":"phrase",
+                            "boost":10
+                        }
+                    },
+                    {
+                        "multi_match":{
+                            "query":text,
+                            "fields":[
+                                "issue^2",
+                                "resolution"
+                            ],
+                            "operator":"and",
+                            "boost":4
+                        }
+                    }
+                ]
             }
         },
         "highlight" : {
