@@ -101,6 +101,7 @@ function dispResult(a,b,resultData,text) {
 
 function clearSuggestions(){
     $("#suggestionDiv").empty();
+    $("#divRight").empty();
 }
 
 function populateSuggestions(data) {
