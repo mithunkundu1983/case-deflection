@@ -1,7 +1,6 @@
 var receivedresultData = "";
 
 function startSuggesting() {
-    console.log("yes");
     var x = document.getElementById("issue");
     var text = "";
     text = x.value;
@@ -116,5 +115,39 @@ function midDivClicked(id) {
     data.resolution = receivedresultData.hits.hits[id]._source.resolution;
     var template = $("#rp_template").html();
     var text = Mustache.render(template, data);
+    $("#form-submit").hide();
     $("#divRight").html(text);
+}
+
+function footerResolved(){
+    $("#suggestionDiv").empty();
+    $("#divRight").empty();
+    $("#form-submit").show();
+    $("#issue").val('');
+    var message = "We are pleased to help you.";
+    showSnackbar(message);
+}
+
+function footerSubmit(){
+    $("#suggestionDiv").empty();
+    $("#divRight").empty();
+    $("#form-submit").show();
+    var min=10000;
+    var max=99999;
+    var random =Math.floor(Math.random() * (+max - +min)) + +min;
+    var message = "Issue submitted with id "+random;
+    $("#issue").val('');
+    showSnackbar(message);
+}
+
+function showSnackbar(message, type) {
+    $("#snackbar").html(message);
+    // Get the snackbar DIV
+    var x = document.getElementById("snackbar");
+
+    // Add the "show" class to DIV
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }

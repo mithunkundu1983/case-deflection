@@ -287,7 +287,7 @@ select{
     text-align: left;
     margin: 0 auto;
     vertical-align: top;
-    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .divMiddle {
@@ -295,29 +295,10 @@ select{
     width: 40%;
     text-align: left;
     vertical-align: middle;
-    padding-top: 20px;
+    padding-bottom: 5px;
     overflow-y: auto;
     max-height: 80vh;
     padding-right: 10px;
-}
-
-.divMiddle input[type=submit],
-.divMiddle input[type=button]{
-    border: none;
-    padding: 8px 15px 8px 15px;
-    background: #FF8500;
-    color: #fff;
-    box-shadow: 1px 1px 4px #DADADA;
-    -moz-box-shadow: 1px 1px 4px #DADADA;
-    -webkit-box-shadow: 1px 1px 4px #DADADA;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-}
-.divMiddle input[type=submit]:hover,
-.divMiddle input[type=button]:hover{
-    background: #EA7B00;
-    color: #fff;
 }
 
 .midHeader{
@@ -403,6 +384,19 @@ select{
     color: #fff;
 }
 
+#footer-resolved{
+    background: rgba(42, 132, 39, 0.99);
+}
+
+#footer-resolved:hover{
+    background: rgba(36, 110, 32, 0.99);
+    color: #fff;
+}
+
+#footer-submit{
+    margin-left: 7em;
+}
+
 .line-separator{
     height:1px;
     background: #bebebe;
@@ -417,4 +411,63 @@ select{
 .resolutionDivDetails{
     overflow-y: auto;
     height: 57vh;
+}
+
+.input-field{
+    visibility: hidden;
+}
+
+.header1{
+    text-align: center;
+    font-size: 24px;
+    line-height: 40px;
+}
+
+.centerAlign{
+    text-align: center;
+}
+
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+   However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
 }
