@@ -45,8 +45,8 @@ function startSuggesting() {
             }
         },
         "highlight" : {
-            "number_of_fragments" : 3,
-            "fragment_size" : 150,
+            "number_of_fragments" : 1,
+            "fragment_size" : 140,
             "fields" : {
                 "issue" : { "pre_tags" : ["<strong>"], "post_tags" : ["</strong>"] },
                 "resolution" : { "pre_tags" : ["<strong>"], "post_tags" : ["</strong>"] }
@@ -59,7 +59,7 @@ function startSuggesting() {
     else {
         $.ajax({
             type: 'POST',
-            url: "https://search-esawskol-p2qmao574p4skf63bo7ssbi66a.us-west-2.es.amazonaws.com/deflectors/_search",
+            url: "https://search-esawskol-p2qmao574p4skf63bo7ssbi66a.us-west-2.es.amazonaws.com/deflectors2/_search",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function (resultData) {
